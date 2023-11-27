@@ -13,8 +13,11 @@ def index(request):
 
 def item_details(request, pk):
     item = get_object_or_404(Item, pk=pk)
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[:3]
+    
     return render(request, 'app/item_details.html', {
-        'item': item
+        'item': item,
+        'related_items': related_items
     })
 
 def contact(request):
