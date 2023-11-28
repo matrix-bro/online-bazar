@@ -125,3 +125,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login' # when user tries to access a page which needs to login first, will be redirected here
+LOGIN_REDIRECT_URL = 'index' # after login successful
