@@ -128,3 +128,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login' # when user tries to access a page which needs to login first, will be redirected here
 LOGIN_REDIRECT_URL = 'index' # after login successful
+LOGOUT_REDIRECT_URL = 'index' # after user logs out
