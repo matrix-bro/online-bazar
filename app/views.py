@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from app.forms import SignUpForm
 
 from app.models import Category, Item
 
@@ -22,3 +23,18 @@ def item_details(request, pk):
 
 def contact(request):
     return render(request, 'app/contact.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'app/signup.html', {
+        'form': form
+    })
