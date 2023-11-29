@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from app.forms import SignUpForm
+from app.forms import NewItemForm, SignUpForm
 
 from app.models import Category, Item
 
@@ -37,4 +37,12 @@ def signup(request):
 
     return render(request, 'app/signup.html', {
         'form': form
+    })
+
+def new_item(request):
+    form = NewItemForm()
+
+    return render(request, 'app/item_form.html', {
+        'form': form,
+        'title': 'New Item',
     })

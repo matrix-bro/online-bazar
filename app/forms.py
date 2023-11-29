@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
 
+from app.models import Item
+
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
 class SignUpForm(UserCreationForm):
@@ -39,3 +41,8 @@ class LoginForm(AuthenticationForm):
         'placeholder': 'Your password',
         'class': INPUT_CLASSES
     }))
+
+class NewItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ('category', 'name', 'description', 'price', 'image',)    
