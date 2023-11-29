@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from app.models import Category, Item
 
 def index(request):
-    items = Item.objects.filter(is_sold=False)[:6]
+    items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
     categories = Category.objects.all()
 
     return render(request, 'app/index.html', {
