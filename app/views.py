@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from app.forms import NewItemForm, SignUpForm
-
+from django.contrib.auth.decorators import login_required
 from app.models import Category, Item
 
 def index(request):
@@ -39,8 +39,20 @@ def signup(request):
         'form': form
     })
 
+@login_required
 def new_item(request):
-    form = NewItemForm()
+    if request.method == 'POST':
+        form = NewItemForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # before saving, we also need to fill created_by field which is not coming from item_form so
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+
+            return redirect('item-details', pk=item.id)
+    else:
+        form = NewItemForm()
 
     return render(request, 'app/item_form.html', {
         'form': form,
