@@ -61,5 +61,8 @@ def new_item(request):
 
 @login_required
 def dashboard(request):
+    items = Item.objects.filter(created_by=request.user).order_by('-created_at')
 
-    return render(request, 'app/dashboard.html')
+    return render(request, 'app/dashboard.html', {
+        'items': items,
+    })
