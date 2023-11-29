@@ -58,3 +58,8 @@ def new_item(request):
         'form': form,
         'title': 'New Item',
     })
+
+@login_required
+def dashboard(request):
+
+    return render(request, 'app/dashboard.html')
