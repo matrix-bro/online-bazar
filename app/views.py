@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from app.forms import NewItemForm, SignUpForm
+from app.forms import EditItemForm, NewItemForm, SignUpForm
 from django.contrib.auth.decorators import login_required
 from app.models import Category, Item
 
@@ -73,3 +73,14 @@ def delete_item(request, pk):
     item.delete()
 
     return redirect('dashboard')
+
+@login_required
+def edit_item(request, pk):
+    item = get_object_or_404(Item, pk=pk, created_by=request.user)
+
+    form = EditItemForm()
+
+    return render(request, 'app/item_form.html', {
+        'form': form,
+        'title': 'Edit Item',
+    })

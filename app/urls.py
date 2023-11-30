@@ -18,5 +18,6 @@ urlpatterns = [
 
     path('dashboard/', views.dashboard, name='dashboard'),
     path('item/<int:pk>/delete/', views.delete_item, name='delete-item'),
+    path('item/<int:pk>/edit/', views.edit_item, name='edit-item'),
 
 ]
