@@ -94,4 +94,11 @@ def edit_item(request, pk):
     })
 
 def browse_items(request):
-    return render(request, 'app/browse_items.html')
+
+    categories = Category.objects.all()
+    items = Item.objects.filter(is_sold=False)
+
+    return render(request, 'app/browse_items.html', {
+        'items': items,
+        'categories': categories,
+    })
