@@ -96,7 +96,7 @@ def edit_item(request, pk):
 
 def browse_items(request):
     query = request.GET.get('query', '')
-    category_id = request.GET.get('category', 0)
+    category_id = request.GET.get('category', 0) # to highlight the category
     categories = Category.objects.all()
     items = Item.objects.filter(is_sold=False)
 
