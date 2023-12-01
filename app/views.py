@@ -92,3 +92,6 @@ def edit_item(request, pk):
         'form': form,
         'title': 'Edit Item',
     })
+
+def browse_items(request):
+    return render(request, 'app/browse_items.html')
