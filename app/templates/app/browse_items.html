@@ -16,7 +16,7 @@
             <p class="font-semibold">Categories</p>
             <ul>
                 {% for category in categories %}
-                    <a href="#">
+                    <a href="{% url 'browse' %}?query={{ query }}&category={{ category.id }}">
                         <li class="py-2 px-2 rounded-xl bg-gray-200">{{ category.name }}</li>
                     </a>
                 {% endfor %}

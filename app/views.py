@@ -96,12 +96,16 @@ def edit_item(request, pk):
 
 def browse_items(request):
     query = request.GET.get('query', '')
+    category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
     items = Item.objects.filter(is_sold=False)
 
     if query:
         # Filtering in name OR description
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
+
+    if category_id:
+        items = items.filter(category_id=category_id)
 
     return render(request, 'app/browse_items.html', {
         'items': items,
