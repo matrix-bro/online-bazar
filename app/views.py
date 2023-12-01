@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from app.forms import EditItemForm, NewItemForm, SignUpForm
 from django.contrib.auth.decorators import login_required
 from app.models import Category, Item
+from django.db.models import Q
 
 def index(request):
     items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
@@ -94,11 +95,16 @@ def edit_item(request, pk):
     })
 
 def browse_items(request):
-
+    query = request.GET.get('query', '')
     categories = Category.objects.all()
     items = Item.objects.filter(is_sold=False)
+
+    if query:
+        # Filtering in name OR description
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
     return render(request, 'app/browse_items.html', {
         'items': items,
         'categories': categories,
+        'query': query,
     })
