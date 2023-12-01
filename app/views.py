@@ -111,4 +111,5 @@ def browse_items(request):
         'items': items,
         'categories': categories,
         'query': query,
+        'category_id': int(category_id),
     })
