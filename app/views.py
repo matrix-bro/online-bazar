@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from app.forms import EditItemForm, NewItemForm, SignUpForm
+from app.forms import ConversationMessageForm, EditItemForm, NewItemForm, SignUpForm
 from django.contrib.auth.decorators import login_required
 from app.models import Category, Item
 from django.db.models import Q
@@ -112,4 +112,13 @@ def browse_items(request):
         'categories': categories,
         'query': query,
         'category_id': int(category_id),
+    })
+
+@login_required
+def new_conversation(request, item_pk):
+
+    form = ConversationMessageForm()
+
+    return render(request, 'app/new_conversation.html', {
+        'form': form,
     })
