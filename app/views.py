@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from app.forms import ConversationMessageForm, EditItemForm, NewItemForm, SignUpForm
 from django.contrib.auth.decorators import login_required
-from app.models import Category, Item
+from app.models import Category, Conversation, Item
 from django.db.models import Q
 
 def index(request):
@@ -116,8 +116,40 @@ def browse_items(request):
 
 @login_required
 def new_conversation(request, item_pk):
+    item = get_object_or_404(Item, pk=item_pk)
 
-    form = ConversationMessageForm()
+    # person who created this item, can't create a new conversation
+    # it should be other users
+    if item.created_by == request.user:
+        return redirect('dashboard')
+    
+    # if this user already has a conversation or has already messaged this owner then redirect to that old conversation
+    conversations = Conversation.objects.filter(item=item).filter(members__in=[request.user.id])
+
+    if conversations:
+        pass # redirect to old conversation (will create this later)
+
+    if request.method == 'POST':
+        form = ConversationMessageForm(request.POST)
+
+        if form.is_valid():
+            # first create a conversation and then conversation message
+
+            conversation = Conversation.objects.create(item=item)
+
+            # add the owner and the user who messaged to the members list
+            conversation.members.add(request.user)
+            conversation.members.add(item.created_by)
+            conversation.save()
+
+            conversation_message = form.save(commit=False)
+            conversation_message.conversation = conversation
+            conversation_message.created_by = request.user
+            conversation_message.save()
+
+            return redirect('item-details', pk=item_pk)
+    else:
+        form = ConversationMessageForm()
 
     return render(request, 'app/new_conversation.html', {
         'form': form,
