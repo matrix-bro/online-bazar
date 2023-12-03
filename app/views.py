@@ -157,4 +157,8 @@ def new_conversation(request, item_pk):
 
 @login_required
 def inbox(request):
-    return render(request, 'app/inbox.html')
+    conversations = Conversation.objects.filter(members__in=[request.user.id])
+
+    return render(request, 'app/inbox.html', {
+        'conversations': conversations
+    })
