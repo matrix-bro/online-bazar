@@ -162,3 +162,7 @@ def inbox(request):
     return render(request, 'app/inbox.html', {
         'conversations': conversations
     })
+
+@login_required
+def conversation_messages(request, pk):
+    return render(request, 'app/conversation_messages.html')
