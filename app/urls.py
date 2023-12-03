@@ -23,5 +23,6 @@ urlpatterns = [
     path('browse/', views.browse_items, name='browse'),
 
     path('new_conversation/<int:item_pk>/', views.new_conversation, name='new-conversation'),
+    path('inbox/', views.inbox, name='inbox'),
 
 ]

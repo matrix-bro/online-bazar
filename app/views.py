@@ -154,3 +154,7 @@ def new_conversation(request, item_pk):
     return render(request, 'app/new_conversation.html', {
         'form': form,
     })
+
+@login_required
+def inbox(request):
+    return render(request, 'app/inbox.html')
