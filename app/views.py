@@ -165,4 +165,24 @@ def inbox(request):
 
 @login_required
 def conversation_messages(request, pk):
-    return render(request, 'app/conversation_messages.html')
+    conversation = Conversation.objects.filter(members__in=[request.user.id]).get(pk=pk)
+
+    if request.method == 'POST':
+        form = ConversationMessageForm(request.POST)
+
+        if form.is_valid():
+            conversation_message = form.save(commit=False)
+            conversation_message.conversation = conversation
+            conversation_message.created_by = request.user
+            conversation_message.save()
+
+            conversation.save() # update modified_date of conversation
+
+            return redirect('conversation-messages', pk=pk)
+    else:
+        form = ConversationMessageForm()
+
+    return render(request, 'app/conversation_messages.html', {
+        'conversation': conversation,
+        'form': form,
+    })
