@@ -3,30 +3,26 @@
 {% block title %} Welcome {% endblock %}
 
 {% block content %}
+    <h2 class="mb-12 text-2xl text-center font-semibold">Latest Items</h2>    
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Newest Items</h2>
 
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in items %}
-                <div>
-                    <a href="{% url 'item-details' item.id %}">
-                        <div>
-                            <img src="{{ item.image.url }}" class="rounded-t-xl w-full h-96">
-                        </div>
-                        <div class="p-6 bg-white rounded-b-xl">
-                            <h2 class="text-2xl">{{ item.name }}</h2>
-                            <p class="text-gray-500">Price: {{ item.price }}</p>
-                        </div>
-                    </a>
-                </div>
+                <a href="{% url 'item-details' item.id %}">
+                    <img src="{{ item.image.url }}" class="rounded-t-xl min-h-[18rem] max-h-[18rem] w-full border-b">
+                    <div class="py-2 md:py-3 lg:py-6 text-center bg-white rounded-b-xl">
+                        <h2 class="md:text-xl lg:text-2xl">{{ item.name }}</h2>
+                        <p class="text-gray-500">Price: {{ item.price|floatformat }}</p>
+                    </div>
+                </a>
             {% endfor %}
         </div>
     </div>
 
-    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl">
+        <h2 class="pb-8 text-2xl text-center">Categories</h2>
 
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in categories %}
                 <div>
                     <a href="#">

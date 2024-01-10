@@ -3,9 +3,9 @@
 {% block title %} {{ item.name }} {% endblock %}
 
 {% block content %}
-    <div class="grid grid-cols-5 gap-6">
+    <div class="grid grid-cols-5 gap-8">
         <div class="col-span-3">
-            <img src="{{ item.image.url }}" class="rounded-xl object-contain h-96">
+            <img src="{{ item.image.url }}" class="rounded-xl w-full h-full max-h-[40rem]">
         </div>
         <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
             <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
