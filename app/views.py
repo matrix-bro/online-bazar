@@ -13,9 +13,9 @@ def index(request):
         'items': items
     })
 
-def item_details(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[:3]
+def item_details(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(slug=slug)[:3]
     
     return render(request, 'app/item_details.html', {
         'item': item,
@@ -51,7 +51,7 @@ def new_item(request):
             item.created_by = request.user
             item.save()
 
-            return redirect('item-details', pk=item.id)
+            return redirect('item-details', slug=item.slug)
     else:
         form = NewItemForm()
 
@@ -69,15 +69,15 @@ def dashboard(request):
     })
 
 @login_required
-def delete_item(request, pk):
-    item = get_object_or_404(Item, pk=pk, created_by=request.user)
+def delete_item(request, slug):
+    item = get_object_or_404(Item, slug=slug, created_by=request.user)
     item.delete()
 
     return redirect('dashboard')
 
 @login_required
-def edit_item(request, pk):
-    item = get_object_or_404(Item, pk=pk, created_by=request.user)
+def edit_item(request, slug):
+    item = get_object_or_404(Item, slug=slug, created_by=request.user)
 
     if request.method == 'POST':
         form = EditItemForm(request.POST, request.FILES, instance=item)
@@ -85,7 +85,7 @@ def edit_item(request, pk):
         if form.is_valid():
             form.save()
 
-            return redirect('item-details', pk=item.id)
+            return redirect('item-details', slug=item.slug)
     else:
         form = EditItemForm(instance=item)
 
@@ -96,7 +96,7 @@ def edit_item(request, pk):
 
 def browse_items(request):
     query = request.GET.get('query', '')
-    category_id = request.GET.get('category', 0) # to highlight the category
+    category_slug = request.GET.get('category', '') # to highlight the category
     categories = Category.objects.all()
     items = Item.objects.filter(is_sold=False)
 
@@ -104,14 +104,14 @@ def browse_items(request):
         # Filtering in name OR description
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
-    if category_id:
-        items = items.filter(category_id=category_id)
+    if category_slug:
+        items = items.filter(category__slug=category_slug)
 
     return render(request, 'app/browse_items.html', {
         'items': items,
         'categories': categories,
         'query': query,
-        'category_id': int(category_id),
+        'category_slug': category_slug,
     })
 
 @login_required

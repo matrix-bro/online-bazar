@@ -16,8 +16,8 @@
             <p class="text-lg">Categories</p>
             <ul class="font-semibold">
                 {% for category in categories %}
-                    <a href="{% url 'browse' %}?query={{ query }}&category={{ category.id }}">
-                        <li class="py-2 px-2 rounded-xl hover:bg-gray-200 {% if category.id == category_id %} bg-gray-200 {% endif %}">{{ category.name }}</li>
+                    <a href="{% url 'browse' %}?query={{ query }}&category={{ category.slug }}">
+                        <li class="py-2 px-2 rounded-xl hover:bg-gray-200 {% if category.slug == category_slug %} bg-gray-200 {% endif %}">{{ category.name }}</li>
                     </a>
                 {% endfor %}
             </ul>
@@ -34,7 +34,7 @@
                 {% if items %}
                     {% for item in items %}
                         <div>
-                            <a href="{% url 'item-details' item.id %}">
+                            <a href="{{ item.get_absolute_url }}">
                                 <div>
                                     <img src="{{ item.image.url }}" class="rounded-t-xl min-h-[15rem] max-h-[15rem] w-full h-96">
                                 </div>

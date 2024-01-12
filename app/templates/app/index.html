@@ -8,7 +8,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in items %}
-                <a href="{% url 'item-details' item.id %}">
+                <a href="{{ item.get_absolute_url }}">
                     <img src="{{ item.image.url }}" class="rounded-t-xl min-h-[18rem] max-h-[18rem] w-full border-b">
                     <div class="py-2 md:py-3 lg:py-6 text-center bg-white rounded-b-xl">
                         <h2 class="md:text-xl lg:text-2xl">{{ item.name }}</h2>

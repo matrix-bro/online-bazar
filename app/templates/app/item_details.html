@@ -21,8 +21,8 @@
                 <div class="mt-6 p-6 bg-white rounded-xl">
                     <p>This is your item!</p>
 
-                    <a href="{% url 'edit-item' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                    <a href="{% url 'delete-item' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+                    <a href="{% url 'edit-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+                    <a href="{% url 'delete-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
                 </div>
             {% else %}
                 <a href="{% url 'new-conversation' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
@@ -37,7 +37,7 @@
             <div class="grid grid-cols-3 gap-3">
                 {% for item in related_items %}
                     <div>
-                        <a href="{% url 'item-details' item.id %}">
+                        <a href="{{ item.get_absolute_url }}">
                             <div>
                                 <img src="{{ item.image.url }}" class="rounded-t-xl w-full h-96">
                             </div>

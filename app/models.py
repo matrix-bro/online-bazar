@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.text import slugify
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=200, unique=True)
 
     def __str__(self):
         return self.name
@@ -18,11 +21,38 @@ class Item(models.Model):
     price = models.FloatField()
     is_sold = models.BooleanField(default=False)
     image = models.ImageField(upload_to='item_images', blank=True, null=True)
+    slug = models.SlugField(max_length=200, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('item-details', kwargs={"slug": self.slug})
+    
+    def generate_unique_slug(self):
+        slug = slugify(self.name)
+        
+        unique_slug = slug 
+        # if the slug is unique, we will return that slug
+        # if not unique, we will generate unique slug
+
+        num = 1
+        while Item.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{slug}-{num}"
+            num += 1
+        
+        return unique_slug
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.generate_unique_slug()
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('-created_at',)
+
     
 class Conversation(models.Model):
     item = models.ForeignKey(Item, related_name='conversations', on_delete=models.CASCADE)
