@@ -11,11 +11,11 @@
                     <div>
                         <a href="{{ item.get_absolute_url }}">
                             <div>
-                                <img src="{{ item.image.url }}" class="rounded-t-xl w-full h-96">
+                                <img src="{{ item.image_card.url }}" class="rounded-t-xl w-full">
                             </div>
                             <div class="p-6 bg-white rounded-b-xl">
-                                <h2 class="text-2xl">{{ item.name }}</h2>
-                                <p class="text-gray-500">Price: {{ item.price }}</p>
+                                <h2 class="text-2xl capitalize">{{ item.name }}</h2>
+                                <p class="text-gray-500">Price: {{ item.price|floatformat }}</p>
                             </div>
                         </a>
                     </div>

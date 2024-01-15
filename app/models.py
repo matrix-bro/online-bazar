@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -21,6 +23,7 @@ class Item(models.Model):
     price = models.FloatField()
     is_sold = models.BooleanField(default=False)
     image = models.ImageField(upload_to='item_images', blank=True, null=True)
+    image_card = ImageSpecField(source='image', processors=[ResizeToFill(450, 250)], format='PNG', options={'quality': 100})
     slug = models.SlugField(max_length=200, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
