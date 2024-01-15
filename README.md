@@ -1,7 +1,5 @@
 # Online Bazar
 
-===============
-
 An online marketplace created using Django
 
 Features:
@@ -13,8 +11,6 @@ Features:
   - Full Chat History
 
 ## Run this project locally
-
-===============
 
 1. Clone the repository:
 
@@ -59,8 +55,6 @@ python manage.py runserver
 ```
 
 ### Optional (Create categories using category_dump.json file)
-
-===============
 
 - You can run
 
