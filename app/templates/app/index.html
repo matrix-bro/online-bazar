@@ -26,14 +26,14 @@
         </div>
     </div>
 
-    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl">
+    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:text-white">
         <h2 class="pb-8 text-2xl text-center">Categories</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in categories %}
                 <div>
                     <a href="#">
-                        <div class="p-6 bg-white rounded-b-xl">
+                        <div class="p-6 bg-white dark:text-black rounded-xl">
                             <h2 class="text-2xl">{{ category.name }}</h2>
                             <p class="text-gray-500">{{ category.items.count }} items</p>
                         </div>
