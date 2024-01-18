@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="min-h-[30rem]">
-        <h1 class="mb-6 text-3xl text-teal-500">Inbox</h1>
+        <h1 class="mb-6 text-3xl md:text-4xl font-bold text-teal-500">Inbox</h1>
 
         {% if conversations %}
             <div class="space-y-6">
@@ -28,7 +28,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            <h2 class="text-xl">No conversations</h2>
+            <h2 class="text-xl bg-gray-200 py-8 px-3 rounded-xl">No conversations</h2>
         {% endif %}
     </div>
 {% endblock %}
