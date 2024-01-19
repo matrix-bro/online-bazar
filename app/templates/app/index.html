@@ -3,17 +3,17 @@
 {% block title %} Welcome {% endblock %}
 
 {% block content %}
-    <h2 class="mb-12 text-2xl text-center font-semibold">Latest Items</h2>    
+    <h2 class="mb-12 text-2xl md:text-3xl text-center font-bold">Latest Items</h2>    
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in items %}
-                <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="bg-white border border-gray-200 rounded-lg shadow">
                     <a href="{{ item.get_absolute_url }}">
                         <img class="rounded-t-lg w-full" src="{{ item.image_card.url }}" alt="" />
                     </a>
                     <div class="p-5">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white capitalize">{{ item.name }}</h5>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 capitalize">Price: {{ item.price|floatformat }}</p>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 capitalize">{{ item.name }}</h5>
+                        <p class="mb-3 font-normal text-gray-700 capitalize">Price: {{ item.price|floatformat }}</p>
                         <a href="{{ item.get_absolute_url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             View Details
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -26,8 +26,8 @@
         </div>
     </div>
 
-    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:text-white">
-        <h2 class="pb-8 text-2xl text-center">Categories</h2>
+    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl">
+        <h2 class="pb-8 text-2xl md:text-3xl font-bold text-center">Categories</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in categories %}

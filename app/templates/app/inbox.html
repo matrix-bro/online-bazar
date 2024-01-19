@@ -6,29 +6,27 @@
     <div class="min-h-[30rem]">
         <h1 class="mb-6 text-3xl md:text-4xl font-bold text-teal-500">Inbox</h1>
 
-        {% if conversations %}
-            <div class="space-y-6">
-                {% for conversation in conversations %}
-                    <a href="{% url 'conversation-messages' conversation.id %}">
-                        <div class="my-2 p-6 flex bg-gray-100 rounded-xl">
-                            <div class="pr-6">
-                                <img src="{{ conversation.item.image.url }}" class="w-20 rounded-xl">
-                            </div>
-
-                            <div>
-                                {% for member in conversation.members.all %}
-                                    {% if member != request.user %}
-                                        <p class="mb-4"><strong>{{ member.username }} | {{ conversation.modified_at }}</strong></p>
-                                        <p>{{ conversation.item.name }}</p>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+        <div class="space-y-6">
+            {% for conversation in conversations %}
+                <a href="{% url 'conversation-messages' conversation.id %}">
+                    <div class="my-2 p-6 flex bg-gray-100 rounded-xl">
+                        <div class="pr-6">
+                            <img src="{{ conversation.item.image.url }}" class="w-20 rounded-xl">
                         </div>
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <h2 class="text-xl bg-gray-200 py-8 px-3 rounded-xl">No conversations</h2>
-        {% endif %}
+
+                        <div>
+                            {% for member in conversation.members.all %}
+                                {% if member != request.user %}
+                                    <p class="mb-4"><strong>{{ member.username }} | {{ conversation.modified_at }}</strong></p>
+                                    <p>{{ conversation.item.name }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
+            {% empty %}
+                <h2 class="text-xl bg-gray-200 py-8 px-3 rounded-xl">No conversation.</h2>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

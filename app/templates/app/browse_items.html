@@ -11,7 +11,7 @@
             </svg>
         </button>
         <aside id="default-sidebar" class="absolute pt-9 pl-3 z-40 w-64 transition-transform -translate-x-full md:block sm:translate-x-0" aria-label="Sidebar">
-            <div class="px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 rounded-xl">
+            <div class="px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-gray-800 rounded-xl">
                 <ul class="space-y-2 font-medium">
                     <li>
                         <form action="{% url 'browse' %}" method="get">
@@ -42,7 +42,6 @@
         </aside>
         <div class="p-4 sm:ml-64">
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {% if items %}
                     {% for item in items %}
                         <div class="bg-white border border-gray-200 rounded-xl shadow dark:border-gray-700">
                             <a href="{{ item.get_absolute_url }}">
@@ -55,10 +54,9 @@
                                 </div>
                             </a>
                         </div>
+                    {% empty %}
+                        <h2 class="text-3xl font-semibold pt-2 text-red-500">Oopps!!! No Item found.</h2>
                     {% endfor %}
-                {% else %}
-                    <h2 class="text-3xl font-semibold pt-2 text-red-500">Oopps!!! No Item found.</h2>
-                {% endif %}
             </div>
         </div>
     </div>
