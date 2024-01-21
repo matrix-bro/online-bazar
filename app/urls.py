@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('browse/', views.browse_items, name='browse'),
 
-    path('new_conversation/<int:item_pk>/', views.new_conversation, name='new-conversation'),
+    path('new_conversation/<slug:item_slug>/', views.new_conversation, name='new-conversation'),
     path('inbox/', views.inbox, name='inbox'),
     path('conversation/<int:pk>/messages/', views.conversation_messages, name='conversation-messages'),
 
