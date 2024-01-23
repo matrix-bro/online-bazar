@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.utils.text import slugify
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+import uuid
+from django.utils.text import Truncator
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -58,6 +60,7 @@ class Item(models.Model):
 
     
 class Conversation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     item = models.ForeignKey(Item, related_name='conversations', on_delete=models.CASCADE)
     members = models.ManyToManyField(User, related_name='conversations')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,9 +69,14 @@ class Conversation(models.Model):
     class Meta:
         ordering = ('-modified_at', )
 
+    def __str__(self):
+        return f"Conversation about Item: {self.item} between {' & '.join(self.members.all().values_list('username', flat=True))}"
+
 class ConversationMessage(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages', on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='created_messages', on_delete=models.CASCADE)
     
+    def __str__(self):
+        return f"{self.created_by} --- to --- {self.conversation.members.exclude(username=self.created_by).first()} ------ {Truncator(self.content).words(5)}"

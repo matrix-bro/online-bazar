@@ -23,6 +23,6 @@ urlpatterns = [
 
     path('new_conversation/<slug:item_slug>/', views.new_conversation, name='new-conversation'),
     path('inbox/', views.inbox, name='inbox'),
-    path('conversation/<int:pk>/messages/', views.conversation_messages, name='conversation-messages'),
+    path('conversation/<uuid:pk>/messages/', views.conversation_messages, name='conversation-messages'),
 
 ]
