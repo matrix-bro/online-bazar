@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'app',
     'imagekit',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,6 @@ LOGIN_REDIRECT_URL = 'index' # after login successful
 LOGOUT_REDIRECT_URL = 'index' # after user logs out
 
 ADMIN_ENABLED = True
+
+RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')

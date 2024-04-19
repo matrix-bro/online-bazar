@@ -19,6 +19,10 @@
                 {{ form.password }}
             </div>
 
+            <div class="mb-3">
+                {{ form.captcha }}
+            </div>
+
             {% if form.errors or form.non_field_errors %}
                 <div class="mb-3 p-6 bg-red-100 rounded-xl">
                     {% for field in form %}
