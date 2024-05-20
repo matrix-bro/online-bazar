@@ -3,8 +3,8 @@
 {% block title %} Welcome {% endblock %}
 
 {% block content %}
-    <h2 class="mb-12 text-2xl md:text-3xl text-center font-bold">Latest Items</h2>    
-    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="my-12 text-2xl md:text-3xl text-center font-semibold">Recent Items</h2>    
+    <div class="mt-6 px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for item in items %}
                 <div class="bg-white border border-gray-200 rounded-lg shadow">
@@ -12,11 +12,11 @@
                         <img class="rounded-t-lg w-full" src="{{ item.image_card.url }}" alt="" />
                     </a>
                     <div class="p-5">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 capitalize">{{ item.name }}</h5>
+                        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 capitalize">{{ item.name }}</h5>
                         <p class="mb-3 font-normal text-gray-700 capitalize">Price: {{ item.price|floatformat }}</p>
-                        <a href="{{ item.get_absolute_url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <a href="{{ item.get_absolute_url }}" class="group inline-flex items-center px-3 py-2 font-medium text-center border border-black/50 rounded-md bg-transparent hover:bg-gray-700 hover:text-white transition-all">
                             View Details
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <svg class="w-3.5 h-3.5 ms-2 group-hover:animate-bounce transition-all" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
                         </a>
@@ -26,15 +26,15 @@
         </div>
     </div>
 
-    <div class="mt-6 px-6 py-8 bg-gray-100 rounded-xl">
-        <h2 class="pb-8 text-2xl md:text-3xl font-bold text-center">Categories</h2>
+    <div class="mt-6 px-6 py-8 rounded-xl bg-slate-100">
+        <h2 class="pb-8 text-2xl md:text-3xl font-semibold text-center">Categories</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for category in categories %}
-                <div>
+                <div class="shadow rounded-xl">
                     <a href="#">
-                        <div class="p-6 bg-white dark:text-black rounded-xl">
-                            <h2 class="text-2xl">{{ category.name }}</h2>
+                        <div class="p-6 bg-white rounded-xl">
+                            <h3 class="text-2xl">{{ category.name }}</h3>
                             <p class="text-gray-500">{{ category.items.count }} items</p>
                         </div>
                     </a>
