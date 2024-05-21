@@ -3,8 +3,8 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %}
-    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl min-h-[30rem]">
-        <h2 class="mb-12 text-3xl md:text-4xl font-bold text-teal-600 text-center">My Items</h2>
+    <div class="mt-6 px-6 py-12 bg-slate-100 rounded-xl min-h-[30rem]">
+        <h2 class="mb-12 text-3xl md:text-4xl font-bold text-teal-600 text-center">My Products</h2>
         {% if items %}
             <div class="grid grid-cols-3 gap-3">
                 {% for item in items %}
@@ -14,7 +14,7 @@
                                 <img src="{{ item.image_card.url }}" class="rounded-t-xl w-full">
                             </div>
                             <div class="p-6 bg-white rounded-b-xl">
-                                <h2 class="text-2xl capitalize">{{ item.name }}</h2>
+                                <h2 class="text-2xl capitalize font-semibold">{{ item.name }}</h2>
                                 <p class="text-gray-500">Price: {{ item.price|floatformat }}</p>
                             </div>
                         </a>
@@ -22,7 +22,10 @@
                 {% endfor %}
             </div>
         {% else %}
-            <h3 class="text-xl text-center">You have 0 items</h3>
+            <h3 class="text-xl text-center">You haven't added any products yet.</h3>
+            <p class="text-center mt-2"><a href="{% url 'new-item' %}" class="text-base hover:underline font-semibold">Click here </a> to
+                <span class=""> "Add New Product"</span>
+            </p>
         {% endif %}
 
     </div>

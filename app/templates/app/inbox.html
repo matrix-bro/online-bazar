@@ -4,12 +4,12 @@
 
 {% block content %}
     <div class="min-h-[30rem]">
-        <h1 class="mb-6 text-3xl md:text-4xl font-bold text-teal-500">Inbox</h1>
+        <h1 class="mb-6 text-3xl md:text-4xl font-bold text-teal-600">Inbox</h1>
 
-        <div class="space-y-6">
+        <div class="space-y-6 h-[400px] overflow-y-auto">
             {% for conversation in conversations %}
                 <a href="{% url 'conversation-messages' conversation.id %}">
-                    <div class="my-2 p-6 flex bg-gray-100 rounded-xl">
+                    <div class="my-2 p-6 flex bg-slate-200 rounded-xl">
                         <div class="pr-6">
                             <img src="{{ conversation.item.image.url }}" class="w-20 rounded-xl">
                         </div>
@@ -17,7 +17,7 @@
                         <div>
                             {% for member in conversation.members.all %}
                                 {% if member != request.user %}
-                                    <p class="mb-4"><strong>{{ member.username }} | {{ conversation.modified_at }}</strong></p>
+                                    <p class="mb-4"><strong>{{ member.username }} </strong>|<span class="text-black/80"> {{ conversation.modified_at }}</span></p>
                                     <p>{{ conversation.item.name }}</p>
                                 {% endif %}
                             {% endfor %}

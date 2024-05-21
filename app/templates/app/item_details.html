@@ -7,8 +7,8 @@
         <div class="col-span-3">
             <img src="{{ item.image.url }}" class="rounded-xl w-full h-full">
         </div>
-        <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-            <h1 class="mb-6 text-3xl font-semibold">{{ item.name }}</h1>
+        <div class="col-span-2 p-6 bg-slate-100 rounded-xl">
+            <h1 class="mb-6 text-3xl font-semibold border-b inline-block border-black border-b-2">{{ item.name }}</h1>
             <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
             {% if item.description %}
                 <p class="text-gray-700">
@@ -18,11 +18,11 @@
             {% endif %}
 
             {% if request.user == item.created_by %}
-                <div class="mt-6 p-6 bg-white rounded-xl">
+                <div class="mt-6 p-6 bg-slate-200 rounded-xl">
                     <p>This is your item!</p>
 
-                    <a href="{% url 'edit-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                    <a href="{% url 'delete-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+                    <a href="{% url 'edit-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 hover:bg-teal-600 text-white rounded-xl">Edit</a>
+                    <a href="{% url 'delete-item' item.slug %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 hover:bg-red-600 text-white rounded-xl">Delete</a>
                 </div>
             {% else %}
                 <a href="{% url 'new-conversation' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
@@ -31,8 +31,8 @@
     </div>
 
     {% if related_items %}
-        <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-            <h2 class="mb-12 text-2xl text-center font-semibold">Related Items</h2>
+        <div class="mt-6 px-6 py-12 rounded-xl">
+            <h2 class="mb-12 text-2xl text-center font-semibold underline">Similar Products</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {% for item in related_items %}

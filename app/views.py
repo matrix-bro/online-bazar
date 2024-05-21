@@ -57,7 +57,7 @@ def new_item(request):
 
     return render(request, 'app/item_form.html', {
         'form': form,
-        'title': 'Add New Item',
+        'title': 'Add New Product',
     })
 
 @login_required
@@ -91,7 +91,7 @@ def edit_item(request, slug):
 
     return render(request, 'app/item_form.html', {
         'form': form,
-        'title': 'Edit Item',
+        'title': 'Edit Product',
     })
 
 def browse_items(request):
