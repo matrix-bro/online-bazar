@@ -54,12 +54,15 @@ class NewItemForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
             'name': forms.TextInput(attrs={
+                'placeholder': 'Product Name',
                 'class': INPUT_CLASSES
             }),
             'description': forms.Textarea(attrs={
+                'placeholder': 'Description',
                 'class': INPUT_CLASSES
             }),
             'price': forms.TextInput(attrs={
+                'placeholder': 'Price',
                 'class': INPUT_CLASSES
             }),
             'image': forms.FileInput(attrs={
