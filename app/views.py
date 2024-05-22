@@ -3,6 +3,7 @@ from app.forms import ConversationMessageForm, EditItemForm, NewItemForm, SignUp
 from django.contrib.auth.decorators import login_required
 from app.models import Category, Conversation, Item
 from django.db.models import Q
+from django.contrib import messages
 
 def index(request):
     items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
@@ -13,6 +14,9 @@ def index(request):
         'items': items
     })
 
+def test_app(request):
+    return render(request, 'app/test_app.html')
+
 def item_details(request, slug):
     item = get_object_or_404(Item, slug=slug)
     related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(slug=slug)[:3]
@@ -22,16 +26,13 @@ def item_details(request, slug):
         'related_items': related_items
     })
 
-def contact(request):
-    return render(request, 'app/contact.html')
-
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.INFO, "Account created successfully. You can now login!")
             return redirect('login')
     else:
         form = SignUpForm()
@@ -42,6 +43,10 @@ def signup(request):
 
 @login_required
 def new_item(request):
+    if request.user.groups.filter(name='Test App Group').exists():
+        messages.add_message(request, messages.INFO, "You don't have permission to create products.")
+        return redirect('login')
+
     if request.method == 'POST':
         form = NewItemForm(request.POST, request.FILES)
 
@@ -51,6 +56,7 @@ def new_item(request):
             item.created_by = request.user
             item.save()
 
+            messages.add_message(request, messages.INFO, "Product added successfully.")
             return redirect('item-details', slug=item.slug)
     else:
         form = NewItemForm()
@@ -70,9 +76,13 @@ def dashboard(request):
 
 @login_required
 def delete_item(request, slug):
+    if request.user.groups.filter(name='Test App Group').exists():
+        messages.add_message(request, messages.INFO, "You don't have permission to delete products.")
+        return redirect('login')
+    
     item = get_object_or_404(Item, slug=slug, created_by=request.user)
     item.delete()
-
+    messages.add_message(request, messages.INFO, "Product deleted successfully.")
     return redirect('dashboard')
 
 @login_required
@@ -84,7 +94,7 @@ def edit_item(request, slug):
 
         if form.is_valid():
             form.save()
-
+            messages.add_message(request, messages.INFO, "Product details updated successfully.")
             return redirect('item-details', slug=item.slug)
     else:
         form = EditItemForm(instance=item)
@@ -116,7 +126,7 @@ def browse_items(request):
 
 @login_required
 def new_conversation(request, item_slug):
-    item = get_object_or_404(Item, pk=item_slug)
+    item = get_object_or_404(Item, slug=item_slug)
 
     # person who created this item, can't create a new conversation
     # it should be other users

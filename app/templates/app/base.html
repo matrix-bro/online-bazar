@@ -57,7 +57,7 @@
             <ul class="py-2 bg-gray-950 text-gray-200/85 tracking-wide rounded-md uppercase" aria-labelledby="user-menu-button">
               <li class="lowercase border-b pb-2">
                 <span class="block text-sm">{{ user.username }}</span>
-                <span class="block text-sm text-gray-400/80 truncate">{{ user.email }}</span>
+                <span class="block text-sm text-gray-400/80 px-2 truncate">{{ user.email }}</span>
               </li>
               <li>
                 <a
@@ -153,12 +153,31 @@
                 >Browse</a
               >
             </li>
+            <li>
+              <a
+                href="{% url 'test_app' %}"
+                class="block py-2 px-3 text-base md:p-0 hover:text-white"
+                >Test App</a
+              >
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="px-6 py-6 relative">{% block content %} {% endblock %}</div>
+    <div class="px-6 py-6 relative">
+      {% if messages %}
+        <div class="flex items-center justify-center">
+          <ul class="text-center p-4 mb-4 bg-orange-200/90 text-orange-800 w-[600px] rounded-lg">
+            {% for message in messages %}
+              <li class="">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% block content %} {% endblock %}
+    </div>
 
     <footer class="py-6 px-10 bg-gray-800 text-white">
       <div class="flex justify-between">
@@ -179,7 +198,7 @@
             </li>
             <li>
               <a
-                href="{% url 'contact' %}"
+                href="#"
                 class="text-lg"
                 >Contact</a
               >

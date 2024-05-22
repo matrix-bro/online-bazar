@@ -5,7 +5,7 @@ from app.forms import LoginForm
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('contact/', views.contact, name='contact'),
+    path('test_app/', views.test_app, name='test_app'),
 
     path('item/<slug:slug>/', views.item_details, name='item-details'),
 

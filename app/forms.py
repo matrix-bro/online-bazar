@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django_recaptcha.fields import ReCaptchaField
 from app.models import ConversationMessage, Item
+from django.conf import settings
 
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
@@ -30,7 +31,8 @@ class SignUpForm(UserCreationForm):
         'placeholder': 'Confirm password',
         'class': INPUT_CLASSES
     }))
-    captcha = ReCaptchaField(error_messages={'required': 'Please complete the captcha.'})
+    if not settings.DEBUG:
+        captcha = ReCaptchaField(error_messages={'required': 'Please complete the captcha.'})
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -42,7 +44,8 @@ class LoginForm(AuthenticationForm):
         'placeholder': 'Your password',
         'class': INPUT_CLASSES
     }))
-    captcha = ReCaptchaField(error_messages={'required': 'Please complete the captcha.'})
+    if not settings.DEBUG:
+        captcha = ReCaptchaField(error_messages={'required': 'Please complete the captcha.'})
 
 class NewItemForm(forms.ModelForm):
     class Meta:
