@@ -43,11 +43,12 @@ def signup(request):
 
 @login_required
 def new_item(request):
-    if request.user.groups.filter(name='Test App Group').exists():
-        messages.add_message(request, messages.INFO, "You don't have permission to create products.")
-        return redirect('login')
-
     if request.method == 'POST':
+        # Not allowing users who belongs to Test App Group to create products
+        if request.user.groups.filter(name='Test App Group').exists():
+            messages.add_message(request, messages.INFO, "You don't have permission to create products.")
+            return redirect('login')
+        
         form = NewItemForm(request.POST, request.FILES)
 
         if form.is_valid():
@@ -90,6 +91,11 @@ def edit_item(request, slug):
     item = get_object_or_404(Item, slug=slug, created_by=request.user)
 
     if request.method == 'POST':
+        # Not allowing users who belongs to Test App Group to edit product details
+        if request.user.groups.filter(name='Test App Group').exists():
+            messages.add_message(request, messages.INFO, "You don't have permission to edit product details.")
+            return redirect('login')
+        
         form = EditItemForm(request.POST, request.FILES, instance=item)
 
         if form.is_valid():
