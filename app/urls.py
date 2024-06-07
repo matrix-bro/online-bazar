@@ -1,7 +1,5 @@
 from django.urls import path
 from app import views
-from django.contrib.auth import views as auth_views
-from app.forms import LoginForm
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -10,8 +8,8 @@ urlpatterns = [
     path('item/<slug:slug>/', views.item_details, name='item-details'),
 
     path('signup/', views.signup, name='signup'),
-    path('login/', auth_views.LoginView.as_view(template_name='app/login.html', authentication_form=LoginForm), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
 
     path('new_item/', views.new_item, name='new-item'),
 

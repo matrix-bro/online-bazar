@@ -30,7 +30,7 @@ cd online-bazar
 python -m venv venv
 
 (In windows)
-source .\venv\Scripts\activate
+.\venv\Scripts\activate
 
 (In linux)
 source venv/bin/activate

@@ -1,9 +1,13 @@
+from typing import Any
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from app.forms import ConversationMessageForm, EditItemForm, NewItemForm, SignUpForm
 from django.contrib.auth.decorators import login_required
-from app.models import Category, Conversation, Item
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
+from app.forms import ConversationMessageForm, EditItemForm, NewItemForm, SignUpForm, LoginForm
+from app.models import Category, Conversation, Item
 
 def index(request):
     items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
@@ -40,6 +44,22 @@ def signup(request):
     return render(request, 'app/signup.html', {
         'form': form
     })
+
+class CustomLoginView(LoginView):
+    template_name = "app/login.html"
+    authentication_form = LoginForm
+
+    def form_valid(self, form: AuthenticationForm) -> HttpResponse:
+        messages.add_message(self.request, messages.INFO, "Login Successfull.")
+        return super().form_valid(form)
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not request.user.is_authenticated:
+            return redirect('login')
+        
+        messages.add_message(self.request, messages.INFO, "Logged out successfully.")
+        return super().dispatch(request, *args, **kwargs)
 
 @login_required
 def new_item(request):
